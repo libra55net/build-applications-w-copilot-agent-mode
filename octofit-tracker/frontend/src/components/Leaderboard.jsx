@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
-function getApiBaseUrl() {
+function getLeaderboardUrl() {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
   return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api'
+    ? `https://${codespaceName}-8000.app.github.dev/api/leaderboard/`
+    : 'http://localhost:8000/api/leaderboard/'
 }
 
 function extractItems(payload) {
@@ -26,7 +26,7 @@ export default function Leaderboard() {
       try {
         setLoading(true)
         setError('')
-        const response = await fetch(`${getApiBaseUrl()}/leaderboard/`, {
+        const response = await fetch(getLeaderboardUrl(), {
           signal: controller.signal,
         })
         if (!response.ok) throw new Error(`HTTP ${response.status}`)

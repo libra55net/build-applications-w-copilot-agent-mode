@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
-function getApiBaseUrl() {
+function getTeamsUrl() {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
   return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api'
+    ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+    : 'http://localhost:8000/api/teams/'
 }
 
 function extractItems(payload) {
@@ -26,7 +26,7 @@ export default function Teams() {
       try {
         setLoading(true)
         setError('')
-        const response = await fetch(`${getApiBaseUrl()}/teams/`, {
+        const response = await fetch(getTeamsUrl(), {
           signal: controller.signal,
         })
         if (!response.ok) throw new Error(`HTTP ${response.status}`)

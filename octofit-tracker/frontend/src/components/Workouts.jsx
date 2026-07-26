@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
-function getApiBaseUrl() {
+function getWorkoutsUrl() {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
   return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api'
+    ? `https://${codespaceName}-8000.app.github.dev/api/workouts/`
+    : 'http://localhost:8000/api/workouts/'
 }
 
 function extractItems(payload) {
@@ -26,7 +26,7 @@ export default function Workouts() {
       try {
         setLoading(true)
         setError('')
-        const response = await fetch(`${getApiBaseUrl()}/workouts/`, {
+        const response = await fetch(getWorkoutsUrl(), {
           signal: controller.signal,
         })
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
