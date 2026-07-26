@@ -1,6 +1,5 @@
 import express from 'express';
 import './config/database';
-import { apiBaseUrl } from './config/apiUrl';
 import activitiesRouter from './routes/activities';
 import leaderboardRouter from './routes/leaderboard';
 import teamsRouter from './routes/teams';
@@ -9,6 +8,10 @@ import workoutsRouter from './routes/workouts';
 
 const app = express();
 const port = 8000;
+const codespaceName = process.env.CODESPACE_NAME;
+const apiBaseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
+  : 'http://localhost:8000';
 
 app.use(express.json());
 

@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require("./config/database");
-const apiUrl_1 = require("./config/apiUrl");
 const activities_1 = __importDefault(require("./routes/activities"));
 const leaderboard_1 = __importDefault(require("./routes/leaderboard"));
 const teams_1 = __importDefault(require("./routes/teams"));
@@ -13,16 +12,20 @@ const users_1 = __importDefault(require("./routes/users"));
 const workouts_1 = __importDefault(require("./routes/workouts"));
 const app = (0, express_1.default)();
 const port = 8000;
+const codespaceName = process.env.CODESPACE_NAME;
+const apiBaseUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : 'http://localhost:8000';
 app.use(express_1.default.json());
 app.get('/api', (_req, res) => {
     res.status(200).json({
-        baseUrl: apiUrl_1.apiBaseUrl,
+        baseUrl: apiBaseUrl,
         routes: {
-            users: `${apiUrl_1.apiBaseUrl}/api/users/`,
-            teams: `${apiUrl_1.apiBaseUrl}/api/teams/`,
-            activities: `${apiUrl_1.apiBaseUrl}/api/activities/`,
-            leaderboard: `${apiUrl_1.apiBaseUrl}/api/leaderboard/`,
-            workouts: `${apiUrl_1.apiBaseUrl}/api/workouts/`,
+            users: `${apiBaseUrl}/api/users/`,
+            teams: `${apiBaseUrl}/api/teams/`,
+            activities: `${apiBaseUrl}/api/activities/`,
+            leaderboard: `${apiBaseUrl}/api/leaderboard/`,
+            workouts: `${apiBaseUrl}/api/workouts/`,
         },
     });
 });
@@ -32,7 +35,7 @@ app.use('/api/activities', activities_1.default);
 app.use('/api/leaderboard', leaderboard_1.default);
 app.use('/api/workouts', workouts_1.default);
 app.get('/api/health', (_req, res) => {
-    res.status(200).json({ status: 'ok', baseUrl: apiUrl_1.apiBaseUrl });
+    res.status(200).json({ status: 'ok', baseUrl: apiBaseUrl });
 });
 app.listen(port, () => {
     console.log(`OctoFit backend listening on port ${port}`);
