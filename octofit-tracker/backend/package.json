@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "PORT=8000 ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
+    "test": "node -e \"console.log('No automated tests are configured; running build verification instead.')\" && npm run build",
     "start": "PORT=8000 node dist/server.js",
     "seed": "npm run build && node dist/scripts/seed.js"
   },
